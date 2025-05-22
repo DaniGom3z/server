@@ -1,9 +1,19 @@
-const { Server } = require("socket.io");
-const http = require("http");
 const express = require("express");
+const http = require("http");
+const cors = require("cors");
+const { Server } = require("socket.io");
+
 const app = express();
+app.use(cors({ origin: "https://gorila-u7d1.onrender.com", credentials: true }));
+
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: "*" } });
+const io = new Server(server, {
+  cors: {
+    origin: "https://gorila-u7d1.onrender.com",
+    methods: ["GET", "POST"],
+    credentials: true
+  }
+});
 
 const rooms = {};
 
@@ -86,6 +96,8 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(3000, () => {
-  console.log("Servidor Socket.io corriendo en puerto 3000");
+// 🔧 Usa el puerto proporcionado por Render (o 3000 en local)
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`Servidor Socket.io corriendo en puerto ${PORT}`);
 });
