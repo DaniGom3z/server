@@ -70,7 +70,7 @@ io.on("connection", (socket) => {
     const room = rooms[roomId];
     if (!room) return;
 
-    room.hp = Math.max(0, room.hp - 500);
+    room.hp = Math.max(0, room.hp - 5);
     const message = room.hp > 0
       ? `Un jugador atacó al gorila. HP restante: ${room.hp}`
       : "¡El gorila ha sido derrotado!";
